@@ -8,24 +8,53 @@ import java.util.ArrayList;
  * @author Henrique Albanese
  * @author Sérgio Umlauf
  */
-public class ListaPessoas extends ArrayList {
+public class ListaPessoas {
 
-    private final ArrayList<Pessoa> lista;
+    private final Pessoa[] lista;
     
-    public ListaPessoas() {
-        lista = new ArrayList<>(50);
+    public ListaPessoas(int tamanho) {
+        lista = new Pessoa[tamanho];
     }
     
     
-    public void inserir(Pessoa pessoa) {
-        lista.add(pessoa);
-    }
-    
-    public boolean remover(Pessoa pessoa) {
-        if(lista.contains(pessoa)) {
-            return lista.remove(pessoa);
+    public boolean insere(Pessoa pessoa) {
+        // Procura uma posição no vetor que seja null.
+        // Se achar, coloca a pessoa nesta posição.
+        for(int i = 0; i < lista.length; i++) {
+            if(lista[i] == null) {
+                lista[i] = pessoa;
+                return true;
+            }
         }
         return false;
     }
     
+    public boolean remove(Pessoa pessoa) {
+        for(int i = 0; i < lista.length; i++) {
+            if(lista[i].equals(pessoa)) {
+                lista[i] = null;
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    public boolean remove(int indice) {
+        if(indice >= 0 && indice < lista.length) {
+            lista[indice] = null;
+            return true;
+        }
+        return false;
+    }
+    
+    
+    public int getIndice(Pessoa pessoa) {
+        for(int i = 0; i < lista.length; i++) {
+            if(lista[i].equals(pessoa)) {
+                return i; // achou a pessoa na lista
+            }
+        }
+        return -1; // não achou a pessoa na lista
+    }
 }
