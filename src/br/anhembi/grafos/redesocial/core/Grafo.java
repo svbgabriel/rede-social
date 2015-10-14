@@ -23,6 +23,11 @@ public class Grafo {
         this.matrizAdjacencia[j][i] = peso;
     }
     
+    public void removeAresta(int i, int j) {
+        this.matrizAdjacencia[i][j] = 0;
+        this.matrizAdjacencia[j][i] = 0;
+    }
+    
     
     
     

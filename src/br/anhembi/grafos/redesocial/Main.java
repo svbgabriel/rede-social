@@ -35,6 +35,8 @@ public class Main {
         redeSocial.relacionar(sergio, gabriel, 3);
         redeSocial.relacionar(henrique, gabriel, 3);
         
+        redeSocial.remove(sergio);
+        
     }
 
 }
