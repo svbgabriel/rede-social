@@ -1,6 +1,7 @@
 package br.anhembi.grafos.redesocial.core;
 
 import br.anhembi.grafos.redesocial.model.*;
+import java.util.ArrayList;
 
 /**
  * Classe para gerenciar a adição e remoção de relacionamentos
@@ -20,25 +21,25 @@ import br.anhembi.grafos.redesocial.model.*;
 public class RedeSocial {
 
     private ListaPessoas listaPessoas;
-    private Grafo grafo;
+    private GrafoSocial grafo;
     
     
     /**
      * Construtor
      * 
-     * @param tamanho 
+     * @param tamanho Quantidade máxima de pessoas da rede.
      */
     public RedeSocial(int tamanho) {
         this.listaPessoas = new ListaPessoas(tamanho);
-        this.grafo = new Grafo(tamanho);
+        this.grafo = new GrafoSocial(new int[tamanho][tamanho]);
     }
     
     
     /**
      * Insere uma pessoa no cadastro
      * 
-     * @param pessoa
-     * @return 
+     * @param pessoa Uma {@link Pessoa}
+     * @return true, se foi inserida com sucesso, ou false, caso tenha falhado.
      */
     public boolean insere(Pessoa pessoa) {
         return this.listaPessoas.insere(pessoa);
@@ -48,8 +49,8 @@ public class RedeSocial {
     /**
      * Remove uma pessoa do cadastro e seus relacionamentos
      * 
-     * @param pessoa
-     * @return 
+     * @param pessoa {@link Pessoa} a ser removida.
+     * @return true, se foi removida com sucesso, ou false, caso tenha falhado.
      */
     public boolean remove(Pessoa pessoa) {
         int indicePessoa = listaPessoas.getIndice(pessoa);
@@ -69,10 +70,10 @@ public class RedeSocial {
     
     
     /**
-     * Remove uma pessoa do cadastro e seus relacionamentos
+     * Remove uma pessoa da rede social e seus relacionamentos
      * 
-     * @param indice
-     * @return 
+     * @param indice Índice da pessoa.
+     * @return true, se foi removida com sucesso, ou false, caso tenha falhado.
      */
     public boolean remove(int indice) {
         int[] relacionamentos = this.grafo.buscaLargura(indice);
@@ -90,11 +91,11 @@ public class RedeSocial {
     
     
     /**
-     * Relaciona duas pessoas
+     * Relaciona duas pessoas.
      * 
-     * @param pessoa1
-     * @param pessoa2
-     * @param anosRelacionamento 
+     * @param pessoa1 Pessoa 1
+     * @param pessoa2 Pessoa 2
+     * @param anosRelacionamento Anos de relacionamento entre elas
      */
     public void relacionar(Pessoa pessoa1, Pessoa pessoa2, int anosRelacionamento) {
         int indicePessoa1 = listaPessoas.getIndice(pessoa1);
@@ -103,5 +104,27 @@ public class RedeSocial {
         this.grafo.adicionaAresta(indicePessoa1, indicePessoa2, anosRelacionamento);
     }
 
+    /**
+     * Retorna uma pessoa da rede.
+     * @param indice Índice da pessoa
+     * @return A {@link Pessoa} procurada ou null, se não encontrar.
+     */
+    public Pessoa getPessoa(int indice) {
+        return this.listaPessoas.getPessoa(indice);
+    }
+    
+    /**
+     * Lista os amigos diretos de uma pessoa.
+     * @param indice Índice da pessoa.
+     * @return Um ArrayList de {@link Pessoa}s, amigas da pessoa.
+     */
+    public ArrayList<Pessoa> amigos(int indice) {
+        ArrayList<Pessoa> result = new ArrayList<Pessoa>();
+        ArrayList<Integer> nosVizinhos = grafo.vizinhos(indice);
+        for(int i : nosVizinhos) {
+            result.add(getPessoa(i));
+        }
+        return result;
+    }
     
 }

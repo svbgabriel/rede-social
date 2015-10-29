@@ -17,6 +17,14 @@ public class ListaPessoas {
     }
     
     
+    public Pessoa getPessoa(int indice) {
+        if(indice < 0 || indice > lista.length - 1) {
+            return null;
+        }
+        return this.lista[indice];
+    }
+    
+    
     public boolean insere(Pessoa pessoa) {
         // Procura uma posição no vetor que seja null.
         // Se achar, coloca a pessoa nesta posição.

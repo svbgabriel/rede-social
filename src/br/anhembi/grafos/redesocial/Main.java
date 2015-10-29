@@ -28,15 +28,27 @@ public class Main {
         
         redeSocial.remove(1);
         
-        redeSocial.insere(new Pessoa("Marcão", 24));
+        Pessoa marcao = new Pessoa("Marcão", 24);
+        redeSocial.insere(marcao);
         
         
         redeSocial.relacionar(sergio, henrique, 3);
         redeSocial.relacionar(sergio, gabriel, 3);
         redeSocial.relacionar(henrique, gabriel, 3);
+        redeSocial.relacionar(henrique, marcao, 3);
         
-        redeSocial.remove(sergio);
+        //redeSocial.remove(sergio);
         
+        int indice = 2;
+        Pessoa pessoa = redeSocial.getPessoa(indice);
+        if(pessoa != null) {
+            System.out.println("Amigos de " + pessoa.getNome() + ":");
+            for(Pessoa p : redeSocial.amigos(indice)) {
+                System.out.println(p.toString());
+            }
+        } else {
+            System.out.println("Pessoa não existe!");
+        }
     }
 
 }
