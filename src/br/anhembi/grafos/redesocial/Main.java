@@ -39,16 +39,24 @@ public class Main {
         
         //redeSocial.remove(sergio);
         
-        int indice = 2;
-        Pessoa pessoa = redeSocial.getPessoa(indice);
-        if(pessoa != null) {
-            System.out.println("Amigos de " + pessoa.getNome() + ":");
-            for(Pessoa p : redeSocial.amigos(indice)) {
-                System.out.println(p.toString());
-            }
-        } else {
-            System.out.println("Pessoa não existe!");
-        }
+//        int indice = 2;
+//        Pessoa pessoa = redeSocial.getPessoa(indice);
+//        if(pessoa != null) {
+//            System.out.println("Amigos de " + pessoa.getNome() + ":");
+//            for(Pessoa p : redeSocial.listaAmigos(indice)) {
+//                System.out.println(p.toString());
+//            }
+//        } else {
+//            System.out.println("Pessoa não existe!");
+//        }
+        
+
+        Pessoa joao = new Pessoa("João", 30);
+        int indiceJoao = redeSocial.insere(joao);
+
+        int numeroVertices = redeSocial.numeroVerticesEntreDuasPessoas(1, 0);
+        
+        System.out.println("Número de vértices: " + numeroVertices);
     }
 
 }

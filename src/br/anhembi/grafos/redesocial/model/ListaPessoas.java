@@ -3,7 +3,11 @@ package br.anhembi.grafos.redesocial.model;
 import java.util.ArrayList;
 
 /**
- *
+ * Manipula a lista de pessoas da rede social.
+ * Esta classe apenas insere ou remove pessoas da rede, 
+ * como um cadastro na rede.
+ * Ele não associa pessoas. Para isso, use {@link RedeSocial}.
+ * 
  * @author Gabriel Batista
  * @author Henrique Albanese
  * @author Sérgio Umlauf
@@ -12,11 +16,23 @@ public class ListaPessoas {
 
     private final Pessoa[] lista;
     
+    
+    /**
+     * Construtor
+     * 
+     * @param   tamanho Quantidade máxima de pessoas da rede.
+     */
     public ListaPessoas(int tamanho) {
         lista = new Pessoa[tamanho];
     }
     
     
+    /**
+     * Busca uma pessoa por seu índice.
+     * 
+     * @param   indice Índice da pessoa
+     * @return  Uma instância de {@link model.Pessoa} ou null, se não achar.
+     */
     public Pessoa getPessoa(int indice) {
         if(indice < 0 || indice > lista.length - 1) {
             return null;
@@ -25,29 +41,34 @@ public class ListaPessoas {
     }
     
     
-    public boolean insere(Pessoa pessoa) {
+    /**
+     * Insere uma pessoa na lista (pessoa se "cadastra na rede").
+     * Este método procura por uma posição "vazia" na lista e
+     * insere a pessoa na primeira que achar.
+     * 
+     * @param   pessoa Uma instância de Pessoa
+     * @return  O índice da pessoa na lista 
+     *          ou -1, se não foi possível inseri-la.
+     */
+    public int insere(Pessoa pessoa) {
         // Procura uma posição no vetor que seja null.
         // Se achar, coloca a pessoa nesta posição.
         for(int i = 0; i < lista.length; i++) {
             if(lista[i] == null) {
                 lista[i] = pessoa;
-                return true;
+                return i;
             }
         }
-        return false;
+        return -1;
     }
+   
     
-    public boolean remove(Pessoa pessoa) {
-        for(int i = 0; i < lista.length; i++) {
-            if(lista[i].equals(pessoa)) {
-                lista[i] = null;
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    
+    /**
+     * Remove a pessoa da lista (pessoa é "escluída da rede").
+     * 
+     * @param   indice Índice da pessoa
+     * @return  true, se a remoção foi possível; false, caso contrário.
+     */
     public boolean remove(int indice) {
         if(indice >= 0 && indice < lista.length) {
             lista[indice] = null;
@@ -57,6 +78,28 @@ public class ListaPessoas {
     }
     
     
+    /**
+     * Remove a pessoa da lista (pessoa é "escluída da rede").
+     * 
+     * @param   pessoa Uma instância de Pessoa
+     * @return  true, se a remoção foi possível; false, caso contrário.
+     * @see     remove(int)
+     */
+    public boolean remove(Pessoa pessoa) {
+        int indice = this.getIndice(pessoa);
+        return this.remove(indice);
+    }
+    
+    
+    /**
+     * Retorna o índice de uma pessoa na lista.
+     * Utilize este método quando você precisa do índice da pessoa
+     * para manipulá-la na rede, mas só tem uma instância 
+     * de {@link model.Pessoa}.
+     * 
+     * @param   pessoa uma instância de {@link model.Pessoa}
+     * @return o índice da pessoa na rede social (lista).
+     */
     public int getIndice(Pessoa pessoa) {
         for(int i = 0; i < lista.length; i++) {
             if(lista[i].equals(pessoa)) {
