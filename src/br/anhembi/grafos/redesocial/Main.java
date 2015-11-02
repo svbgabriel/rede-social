@@ -2,6 +2,7 @@ package br.anhembi.grafos.redesocial;
 
 import br.anhembi.grafos.redesocial.core.RedeSocial;
 import br.anhembi.grafos.redesocial.model.*;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -11,18 +12,18 @@ import java.util.Scanner;
  * @author Sérgio Umlauf
  */
 public class Main {
-
+    
     public static void main(String[] args) {
-
+        
         int op, idade, op_id_ni, id, idade_p1, idade_p2, tempo, id_p1, id_p2, numeroVertices;
         String nome, nome_p1, nome_p2;
-
+        
         Scanner input = new Scanner(System.in);
-
+        
         Pessoa p1, p2;
-
+        
         RedeSocial redeSocial = new RedeSocial(50);
-
+        
         do {
             System.out.println("----- Rede Social -----");
             System.out.println("----- Menu -----");
@@ -35,11 +36,11 @@ public class Main {
                     + "7 - Status da Rede\n"
                     + "8 - Sair");
             System.out.println("----- Menu -----");
-
+            
             op = input.nextInt();
-
+            
             switch (op) {
-
+                
                 case 1:
                     System.out.println("----- Adicionar -----");
                     System.out.println("Informe o nome da pessoa");
@@ -82,9 +83,10 @@ public class Main {
                     }
                     break;
                 case 3:
-                    /*
-                     TODO: Verificar se há pessoas suficientes
-                     */
+                    if (redeSocial.getQuantidade() < 2) {
+                        System.out.println("É preciso pelo menos duas pessoas na na Rede");
+                        break;
+                    }
                     System.out.println("----- Conectar -----");
                     System.out.println("Deseja conectar por: 1 -ID ou 2 - Nome e idade");
                     op_id_ni = input.nextInt();
@@ -123,9 +125,10 @@ public class Main {
                     }
                     break;
                 case 4:
-                    /*
-                     TODO: Verificar se há pessoas suficientes
-                     */
+                    if (redeSocial.getQuantidade() < 2) {
+                        System.out.println("É preciso pelo menos duas pessoas na na Rede");
+                        break;
+                    }
                     System.out.println("----- Amigos de uma pessoa -----");
                     System.out.println("Deseja procurar por: 1 -ID ou 2 - Nome e idade");
                     op_id_ni = input.nextInt();
@@ -156,9 +159,10 @@ public class Main {
                     }
                     break;
                 case 5:
-                    /*
-                     TODO: Verificar se há pessoas suficientes
-                     */
+                    if (redeSocial.getQuantidade() < 2) {
+                        System.out.println("É preciso pelo menos duas pessoas na na Rede");
+                        break;
+                    }
                     System.out.println("----- Distância entre 2 pessoas -----");
                     System.out.println("Deseja procurar por: 1 -ID ou 2 - Nome e idade");
                     op_id_ni = input.nextInt();
@@ -192,10 +196,26 @@ public class Main {
                     }
                     break;
                 case 6:
-                    //TODO
+                    System.out.println("-----  Árvore mínima -----");
+                    System.out.println("Escolha 1 - Prim 2 - Kruskal");
+                    op_id_ni = input.nextInt();
+                    switch (op_id_ni) {
+                        case 1:
+                            System.out.println(redeSocial.getArvoreMinima(0));
+                            break;
+                        case 2:
+                            List<Pessoa[]> arvoreMinima = redeSocial.getArvoreMinima();
+                            for (Pessoa[] arrayPessoas : arvoreMinima) {
+                                System.out.println(arrayPessoas[0].getNome() + " --- " + arrayPessoas[1].getNome());
+                            }
+                        default:
+                            System.out.println("Opção inválida,escolha novamente");
+                            break;
+                    }
                     break;
                 case 7:
-                    //TODO
+                    System.out.println("-----  Status da Rede -----");
+                    redeSocial.status(true);
                     break;
                 case 8:
                     System.out.println("Encerrando");
@@ -205,47 +225,8 @@ public class Main {
                     System.out.println("Opção inválida escolha novamente");
                     break;
             }
-
-        } while (op != 8);
-        //redeSocial.remove(sergio);
-        
-        
-        // Issue #3 -----------------------------
-//        int indice = 2;
-//        Pessoa pessoa = redeSocial.getPessoa(indice);
-//        if(pessoa != null) {
-//            System.out.println("Amigos de " + pessoa.getNome() + ":");
-//            for(Pessoa p : redeSocial.listaAmigos(indice)) {
-//                System.out.println(p.toString());
-//            }
-//        } else {
-//            System.out.println("Pessoa não existe!");
-//        }
-        
-        
-        // Issue #4 -----------------------------
-//        Pessoa joao = new Pessoa("João", 30);
-//        int indiceJoao = redeSocial.insere(joao);
-//
-//        int numeroVertices = redeSocial.numeroVerticesEntreDuasPessoas(1, 0);
-//        
-//        System.out.println("Número de vértices: " + numeroVertices);
-        
-        
-        
-        // Issue #5 -----------------------------
-        //System.out.println(redeSocial.getArvoreMinimaPrim(0));
-        //System.out.println(redeSocial.getArvoreMinimaKruskal());
-        
-//        List<Pessoa[]> arvoreMinima = redeSocial.getArvoreMinima();
-//        for(Pessoa[] arrayPessoas : arvoreMinima) {
-//            System.out.println(arrayPessoas[0].getNome() + " --- " + arrayPessoas[1].getNome());
-//        }
-        
-        
-        // Issue #6 -----------------------------
-        redeSocial.status(false);
-                
+            
+        } while (op != 8);  
     }
-
+    
 }
