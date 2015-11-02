@@ -2,6 +2,7 @@ package br.anhembi.grafos.redesocial;
 
 import br.anhembi.grafos.redesocial.core.RedeSocial;
 import br.anhembi.grafos.redesocial.model.*;
+import java.util.List;
 
 /**
  *
@@ -39,6 +40,8 @@ public class Main {
         
         //redeSocial.remove(sergio);
         
+        
+        // Issue #3 -----------------------------
 //        int indice = 2;
 //        Pessoa pessoa = redeSocial.getPessoa(indice);
 //        if(pessoa != null) {
@@ -50,13 +53,30 @@ public class Main {
 //            System.out.println("Pessoa não existe!");
 //        }
         
-
-        Pessoa joao = new Pessoa("João", 30);
-        int indiceJoao = redeSocial.insere(joao);
-
-        int numeroVertices = redeSocial.numeroVerticesEntreDuasPessoas(1, 0);
         
-        System.out.println("Número de vértices: " + numeroVertices);
+        // Issue #4 -----------------------------
+//        Pessoa joao = new Pessoa("João", 30);
+//        int indiceJoao = redeSocial.insere(joao);
+//
+//        int numeroVertices = redeSocial.numeroVerticesEntreDuasPessoas(1, 0);
+//        
+//        System.out.println("Número de vértices: " + numeroVertices);
+        
+        
+        
+        // Issue #5 -----------------------------
+        //System.out.println(redeSocial.getArvoreMinimaPrim(0));
+        //System.out.println(redeSocial.getArvoreMinimaKruskal());
+        
+//        List<Pessoa[]> arvoreMinima = redeSocial.getArvoreMinima();
+//        for(Pessoa[] arrayPessoas : arvoreMinima) {
+//            System.out.println(arrayPessoas[0].getNome() + " --- " + arrayPessoas[1].getNome());
+//        }
+        
+        
+        // Issue #6 -----------------------------
+        redeSocial.status(false);
+        
     }
 
 }

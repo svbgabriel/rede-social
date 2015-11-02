@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class ListaPessoas {
 
     private final Pessoa[] lista;
+    private int quantidade = 0;
     
     
     /**
@@ -24,6 +25,16 @@ public class ListaPessoas {
      */
     public ListaPessoas(int tamanho) {
         lista = new Pessoa[tamanho];
+    }
+    
+    
+    /**
+     * Quantidade de pessoas na lista.
+     * 
+     * @return A quantidade de pessoas.
+     */
+    public int getQuantidade() {
+        return this.quantidade;
     }
     
     
@@ -56,6 +67,7 @@ public class ListaPessoas {
         for(int i = 0; i < lista.length; i++) {
             if(lista[i] == null) {
                 lista[i] = pessoa;
+                this.quantidade++;
                 return i;
             }
         }
@@ -72,6 +84,7 @@ public class ListaPessoas {
     public boolean remove(int indice) {
         if(indice >= 0 && indice < lista.length) {
             lista[indice] = null;
+            this.quantidade--;
             return true;
         }
         return false;

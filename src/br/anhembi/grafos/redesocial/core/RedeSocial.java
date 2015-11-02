@@ -2,6 +2,8 @@ package br.anhembi.grafos.redesocial.core;
 
 import br.anhembi.grafos.redesocial.model.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Classe para gerenciar a adição e remoção de relacionamentos
@@ -20,8 +22,10 @@ import java.util.ArrayList;
  */
 public class RedeSocial {
 
+    private int tamanho = 0;
     private ListaPessoas listaPessoas;
     private GrafoSocial grafo;
+    
     
     
    
@@ -32,6 +36,7 @@ public class RedeSocial {
      * @param   tamanho Quantidade máxima de pessoas da rede.
      */
     public RedeSocial(int tamanho) {
+        this.tamanho = tamanho;
         this.listaPessoas = new ListaPessoas(tamanho);
         this.grafo = new GrafoSocial(new int[tamanho][tamanho]);
     }
@@ -116,15 +121,16 @@ public class RedeSocial {
         return this.listaPessoas.getPessoa(indice);
     }
     
+    
     /**
      * Lista os amigos diretos de uma pessoa.
      * 
      * @param   indice Índice da pessoa.
      * @return  Um ArrayList de {@link Pessoa}s, amigas da pessoa.
      */
-    public ArrayList<Pessoa> listaAmigos(int indice) {
-        ArrayList<Pessoa> result = new ArrayList<Pessoa>();
-        ArrayList<Integer> nosVizinhos = this.grafo.vizinhos(indice);
+    public List<Pessoa> listaAmigos(int indice) {
+        List<Pessoa> result = new ArrayList<Pessoa>();
+        List<Integer> nosVizinhos = this.grafo.vizinhos(indice);
         for(int i : nosVizinhos) {
             result.add(getPessoa(i));
         }
@@ -175,5 +181,141 @@ public class RedeSocial {
         int indicePessoa2 = this.listaPessoas.getIndice(pessoa2);
         
         return this.numeroVerticesEntreDuasPessoas(indicePessoa1, indicePessoa2);
+    }
+    
+    
+    /**
+     * Retorna a árvore mínima da rede.
+     * Se <code>verticeInicial</code> estiver fora do intervalo entre 0 e 
+     * [tamanho da rede - 1], o algoritmo de Kruskal é utilizado. Caso 
+     * contrário, é utilizado o algoritmo de Prim.
+     * 
+     * Nota: A string retorna o tamanho da rede. Caso não haja aresta
+     * entre dois índices, retorna "[0,0]".
+     * 
+     * @param   verticeInicial Vértice inicial
+     * @return  uma string com os vértices da árvore mínima.
+     *          Exemplo: "[0,2], [0,3] [1,2], [0,0], [0,0], "
+     */
+    public String getArvoreMinima(int verticeInicial) {
+        if(verticeInicial < 0 || verticeInicial > this.tamanho - 1) {
+            return this.grafo.kruskal();
+        } else {
+            return this.grafo.prim(verticeInicial);
+        }
+    }
+    
+    
+    /**
+     * Retorna a lista de {@link Pessoa}s da árvore mínima.
+     * 
+     * @return  uma lista de duplas de {@link Pessoa}s.
+     */
+    public List<Pessoa[]> getArvoreMinima() {
+        List<Pessoa[]> result = new ArrayList<Pessoa[]>();
+        
+        String arvore = this.grafo.kruskal();
+        
+        // A string da árvore mínima está retornando com ", " no final.
+        // Aqui removemos o ", ".
+        if(arvore.endsWith(", ")) {
+            arvore = arvore.substring(0, arvore.length() - 2);
+        }
+        
+        // [0,2], [0,3], [1,2] => [0,2],[0,3],[1,2]
+        arvore = arvore.replace(" ", "");
+        // [0,2],[0,3],[1,2] => [0,2];[0,3];[1,2]
+        arvore = arvore.replace("],", "];");
+        
+        // Cada token vai conter: "[i,j]"
+        StringTokenizer token = new StringTokenizer(arvore, ";");
+        while (token.hasMoreTokens()) {
+            String t = token.nextToken();
+            t = t.replace("[", "");
+            t = t.replace("]", "");
+            String[] indices = t.split(",");
+            
+            if(indices[0].equals(indices[1])) {
+                // Árvore tem um nó [0,0], por exemplo.
+                continue;
+            }
+            
+            Pessoa[] pessoas = new Pessoa[2];
+            for(int i = 0; i < indices.length;i++) {
+                pessoas[i] = this.getPessoa(Integer.parseInt(indices[i]));
+            }
+            result.add(pessoas);
+        }
+        
+        return result;
+    }
+    
+    
+     /**
+     * Quantidade de pessoas cadastradas na rede.
+     * 
+     * @return  a quantidade de pessoas.
+     */
+    public int getQuantidade() {
+        return this.listaPessoas.getQuantidade();
+    }
+    
+    
+    /**
+     * Número de conexões da rede.
+     * Sergio/Henrique e Henrique/Sergio é considerada uma conexão.
+     * 
+     * @return  a quantidade de conexões da rede.
+     */
+    public int numeroConexoes() {
+        return this.grafo.quantidadeArestas();
+    }
+    
+    
+    /**
+     * Lista de pares de {@link Pessoa}s.
+     * O para de pessoas é um array de 2 posições.
+     * 
+     * @return uma lista de pares de pessoas (amigas entre si).
+     */
+    public List<Pessoa[]> conexoes(boolean repetirConexoes) {
+        List<Pessoa[]> result = new ArrayList<Pessoa[]>();
+        
+        int[][] conexoes = this.grafo.conexoes(repetirConexoes);
+        
+        for (int i = 0; i < conexoes.length; i++) {
+            for (int j = 0; j < conexoes[i].length; j++) {
+                if(conexoes[i][j] >= 0) {
+                    Pessoa[] pessoas = new Pessoa[2];
+                    pessoas[0] = this.getPessoa(i);
+                    pessoas[1] = this.getPessoa(conexoes[i][j]);
+                    result.add(pessoas);
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    
+    /**
+     * Imprime o status da rede social.
+     * Usuários cadastrados
+     * Somatório dos pesos das arestas
+     * Númeor de conexões
+     * Pessoas conectadas
+     */
+    public void status(boolean repetirConexoes) {
+        System.out.println("Status da rede ----------------------------------");
+        System.out.println("Usuários cadastrados:\t\t\t" + this.getQuantidade());
+        System.out.println("Somatório dos pesos das arestas:\t" + this.grafo.numeroArestas());
+        System.out.println("Conexões:\t\t\t\t" + this.numeroConexoes());
+        
+        System.out.println("\nPessoas conectadas: ");
+        List<Pessoa[]> conexoes = this.conexoes(repetirConexoes);
+        for(Pessoa[] arrayPessoas : conexoes) {
+            System.out.println("\t" + arrayPessoas[0].getNome() + " está conectado a " + arrayPessoas[1].getNome());
+        }
+        System.out.println("-------------------------------------------------");
     }
 }

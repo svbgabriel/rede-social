@@ -122,4 +122,62 @@ public class GrafoSocial extends Grafo {
         
         return antecessor;
     }
+    
+    
+    /**
+     * Retorna o número de arestas no grafo.
+     * Similar a {@link numeroArestas}, porém {@link numeroArestas} retorna
+     * a somatória dos pesos em um grafo valorado, como o utilizado em 
+     * uma rede social.
+     * 
+     * @return O número de arestas.
+     */
+    public int quantidadeArestas() {
+        int num = 0;
+        for (int i = 0; i < matrizAdjacencia.length; i++) {
+            // Aqui fazemos j = i + 1 porque, numa rede social, 
+            // ninguém está conectado a si mesmo.
+            for (int j = i + 1; j < matrizAdjacencia[i].length; j++) {
+                if (matrizAdjacencia[i][j] != 0) {
+                    num++;
+                }
+            }
+        }
+        return num;
+    }
+    
+    
+    /**
+     * Retorna uma lista de adjacências (mais ou menos).
+     * Para não repetir conexões (exemplo: Sergio-Henrique e Henrique-Sergio),
+     * informe <code>repetirConexoes</code> = <code>false</code>.
+     * 
+     * @param   repetirConexoes Repete conexões
+     * @return  um array bidimensional, onde i = pessoa da rede, e j o índice
+     *          de seus amigos.
+     *   Exemplo: [0] = 2,3
+     *            [1] = 2
+     *            [2] = 0,3
+     */
+    public int[][] conexoes(boolean repetirConexoes) {
+        int[][] amigos = new int[matrizAdjacencia.length][matrizAdjacencia.length];
+        int k;
+        
+        for (int i = 0; i < this.matrizAdjacencia.length; i++) {
+            for (int j = 0; j < matrizAdjacencia[i].length; j++) {
+                amigos[i][j] = -1;
+            }
+        }
+        
+        for (int i = 0; i < this.matrizAdjacencia.length; i++) {
+            k = 0;
+            for (int j = (repetirConexoes ? 0 : i + 1); j < matrizAdjacencia[i].length; j++) {
+                if (matrizAdjacencia[i][j] > 0) {
+                    amigos[i][k] = j;
+                    k++;
+                }
+            }
+        }
+        return amigos;
+    }
 }
