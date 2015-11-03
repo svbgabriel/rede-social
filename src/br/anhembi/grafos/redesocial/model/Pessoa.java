@@ -9,20 +9,18 @@ import java.util.Objects;
  * @author Sérgio Umlauf
  */
 public class Pessoa {
-    
+
     private String nome;
     private int idade;
 
-    
-    public Pessoa() {}
-    
+    public Pessoa() {
+    }
+
     public Pessoa(String nome, int idade) {
         this.nome = nome;
         this.idade = idade;
     }
-    
-    
-    
+
     /**
      * @return the nome
      */
@@ -50,18 +48,18 @@ public class Pessoa {
     public void setIdade(int idade) {
         this.idade = idade;
     }
-    
+
     @Override
     public String toString() {
         return this.getNome() + " (" + this.getIdade() + ")";
     }
-    
+
     @Override
     public boolean equals(Object o) {
-        if(!(o instanceof Pessoa)) {
+        if (!(o instanceof Pessoa)) {
             return false;
         }
-        Pessoa outra = (Pessoa)o;
+        Pessoa outra = (Pessoa) o;
         return (this.nome.equals(outra.nome) && this.idade == outra.idade);
     }
 

@@ -12,18 +12,19 @@ import java.util.Scanner;
  * @author Sérgio Umlauf
  */
 public class Main {
-    
+
     public static void main(String[] args) {
-        
-        int op, idade, op_id_ni, id, idade_p1, idade_p2, tempo, id_p1, id_p2, numeroVertices;
+
+        int op, idade, op_id_ni, id, idade_p1, idade_p2, tempo, id_p1, id_p2, 
+                numeroVertices;
         String nome, nome_p1, nome_p2;
-        
+
         Scanner input = new Scanner(System.in);
-        
+
         Pessoa p1, p2;
-        
+
         RedeSocial redeSocial = new RedeSocial(50);
-        
+
         do {
             System.out.println("----- Rede Social -----");
             System.out.println("----- Menu -----");
@@ -36,11 +37,11 @@ public class Main {
                     + "7 - Status da Rede\n"
                     + "8 - Sair");
             System.out.println("----- Menu -----");
-            
+
             op = input.nextInt();
-            
+
             switch (op) {
-                
+
                 case 1:
                     System.out.println("----- Adicionar -----");
                     System.out.println("Informe o nome da pessoa");
@@ -84,7 +85,7 @@ public class Main {
                     break;
                 case 3:
                     if (redeSocial.getQuantidade() < 2) {
-                        System.out.println("É preciso pelo menos duas pessoas na na Rede");
+                        System.out.println("É preciso pelo menos duas pessoas na Rede");
                         break;
                     }
                     System.out.println("----- Conectar -----");
@@ -126,7 +127,7 @@ public class Main {
                     break;
                 case 4:
                     if (redeSocial.getQuantidade() < 2) {
-                        System.out.println("É preciso pelo menos duas pessoas na na Rede");
+                        System.out.println("É preciso pelo menos duas pessoas na Rede");
                         break;
                     }
                     System.out.println("----- Amigos de uma pessoa -----");
@@ -152,7 +153,17 @@ public class Main {
                             System.out.println("Informe a idade da pessoa");
                             idade = input.nextInt();
                             p1 = new Pessoa(nome, idade);
-                        //TODO: Possibilitar a busca por pessoa
+                            id = redeSocial.getIndice(p1);
+                            p1 = redeSocial.getPessoa(id);
+                            if (p1 != null) {
+                                System.out.println("Amigos de " + p1.getNome() + ":");
+                                for (Pessoa p : redeSocial.listaAmigos(id)) {
+                                    System.out.println(p.toString());
+                                }
+                            } else {
+                                System.out.println("Pessoa não existe!");
+                            }
+                            break;
                         default:
                             System.out.println("Opção inválida,escolha novamente");
                             break;
@@ -160,7 +171,7 @@ public class Main {
                     break;
                 case 5:
                     if (redeSocial.getQuantidade() < 2) {
-                        System.out.println("É preciso pelo menos duas pessoas na na Rede");
+                        System.out.println("É preciso pelo menos duas pessoas na Rede");
                         break;
                     }
                     System.out.println("----- Distância entre 2 pessoas -----");
@@ -176,7 +187,6 @@ public class Main {
                             System.out.println("Número de vértices: " + numeroVertices);
                             break;
                         case 2:
-                            //TODO: Possibilitar a busca por pessoa
                             System.out.println("Informe o nome da primeira pessoa");
                             nome_p1 = input.nextLine();
                             System.out.println("Informe a idade da primeira pessoa");
@@ -225,8 +235,8 @@ public class Main {
                     System.out.println("Opção inválida escolha novamente");
                     break;
             }
-            
-        } while (op != 8);  
+
+        } while (op != 8);
     }
-    
+
 }
