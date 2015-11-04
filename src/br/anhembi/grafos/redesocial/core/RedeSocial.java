@@ -23,6 +23,7 @@ public class RedeSocial {
     private ListaPessoas listaPessoas;
     private GrafoSocial grafo;
 
+    
     /**
      * Construtor
      *
@@ -34,6 +35,7 @@ public class RedeSocial {
         this.grafo = new GrafoSocial(new int[tamanho][tamanho]);
     }
 
+    
     /**
      * Insere uma pessoa no cadastro
      *
@@ -41,9 +43,10 @@ public class RedeSocial {
      * @return true, se foi inserida com sucesso, ou false, caso tenha falhado.
      */
     public int insere(Pessoa pessoa) {
-        return this.listaPessoas.insere(pessoa);
+        return this.getListaPessoas().insere(pessoa);
     }
 
+    
     /**
      * Remove uma pessoa do cadastro e seus relacionamentos
      *
@@ -51,7 +54,7 @@ public class RedeSocial {
      * @return true, se foi removida com sucesso, ou false, caso tenha falhado.
      */
     public boolean remove(Pessoa pessoa) {
-        int indicePessoa = listaPessoas.getIndice(pessoa);
+        int indicePessoa = getListaPessoas().getIndice(pessoa);
 
         int[] relacionamentos = this.grafo.buscaLargura(indicePessoa);
 
@@ -63,9 +66,10 @@ public class RedeSocial {
         }
 
         // Remove o "cadastro" da pessoa
-        return this.listaPessoas.remove(pessoa);
+        return this.getListaPessoas().remove(pessoa);
     }
 
+    
     /**
      * Remove uma pessoa da rede social e seus relacionamentos
      *
@@ -83,9 +87,10 @@ public class RedeSocial {
         }
 
         // Remove o "cadastro" da pessoa       
-        return this.listaPessoas.remove(indice);
+        return this.getListaPessoas().remove(indice);
     }
 
+    
     /**
      * Relaciona duas pessoas.
      *
@@ -94,12 +99,13 @@ public class RedeSocial {
      * @param anosRelacionamento Anos de relacionamento entre elas
      */
     public void relacionar(Pessoa pessoa1, Pessoa pessoa2, int anosRelacionamento) {
-        int indicePessoa1 = listaPessoas.getIndice(pessoa1);
-        int indicePessoa2 = listaPessoas.getIndice(pessoa2);
+        int indicePessoa1 = getListaPessoas().getIndice(pessoa1);
+        int indicePessoa2 = getListaPessoas().getIndice(pessoa2);
 
         this.grafo.adicionaAresta(indicePessoa1, indicePessoa2, anosRelacionamento);
     }
 
+    
     /**
      * Retorna uma pessoa da rede.
      *
@@ -107,9 +113,10 @@ public class RedeSocial {
      * @return A {@link Pessoa} procurada ou null, se não encontrar.
      */
     public Pessoa getPessoa(int indice) {
-        return this.listaPessoas.getPessoa(indice);
+        return this.getListaPessoas().getPessoa(indice);
     }
 
+    
     /**
      * Retorna o índice de uma pessoa na lista. Utilize este método quando você
      * precisa do índice da pessoa para manipulá-la na rede, mas só tem uma
@@ -119,9 +126,10 @@ public class RedeSocial {
      * @return o índice da pessoa na rede social (lista).
      */
     public int getIndice(Pessoa pessoa) {
-        return this.listaPessoas.getIndice(pessoa);
+        return this.getListaPessoas().getIndice(pessoa);
     }
 
+    
     /**
      * Lista os amigos diretos de uma pessoa.
      *
@@ -137,6 +145,7 @@ public class RedeSocial {
         return result;
     }
 
+    
     /**
      * Quantidade de vértices entre duas pessoas.
      *
@@ -163,6 +172,7 @@ public class RedeSocial {
         return result;
     }
 
+    
     /**
      * Quantidade de vértices entre duas pessoas.
      *
@@ -173,12 +183,13 @@ public class RedeSocial {
      * @see #numeroVerticesEntreDuasPessoas(int, int)
      */
     public int numeroVerticesEntreDuasPessoas(Pessoa pessoa1, Pessoa pessoa2) {
-        int indicePessoa1 = this.listaPessoas.getIndice(pessoa1);
-        int indicePessoa2 = this.listaPessoas.getIndice(pessoa2);
+        int indicePessoa1 = this.getListaPessoas().getIndice(pessoa1);
+        int indicePessoa2 = this.getListaPessoas().getIndice(pessoa2);
 
         return this.numeroVerticesEntreDuasPessoas(indicePessoa1, indicePessoa2);
     }
 
+    
     /**
      * Retorna a árvore mínima da rede. Se <code>verticeInicial</code> estiver
      * fora do intervalo entre 0 e [tamanho da rede - 1], o algoritmo de Kruskal
@@ -199,6 +210,7 @@ public class RedeSocial {
         }
     }
 
+    
     /**
      * Retorna a lista de {@link Pessoa}s da árvore mínima.
      *
@@ -243,15 +255,17 @@ public class RedeSocial {
         return result;
     }
 
+    
     /**
      * Quantidade de pessoas cadastradas na rede.
      *
      * @return a quantidade de pessoas.
      */
     public int getQuantidade() {
-        return this.listaPessoas.getQuantidade();
+        return this.getListaPessoas().getQuantidade();
     }
 
+    
     /**
      * Número de conexões da rede. Sergio/Henrique e Henrique/Sergio é
      * considerada uma conexão.
@@ -262,11 +276,15 @@ public class RedeSocial {
         return this.grafo.quantidadeArestas();
     }
 
+    
     /**
      * Lista de pares de {@link Pessoa}s. O para de pessoas é um array de 2
      * posições.
      *
-     * @return uma lista de pares de pessoas (amigas entre si).
+     * @param   repetirConexoes True, se desejar que a lista retorne conexões
+     *                          repetidas (por exemplo, Sergio-Gabriel e
+     *                          Gabriel-Sergio).
+     * @return  uma lista de pares de pessoas (amigas entre si).
      */
     public List<Pessoa[]> conexoes(boolean repetirConexoes) {
         List<Pessoa[]> result = new ArrayList<Pessoa[]>();
@@ -287,9 +305,38 @@ public class RedeSocial {
         return result;
     }
 
+    
+    /**
+     * Lista de {@link Relacionamento}s da rede.
+     * 
+     * @return uma lista de {@link Relacionamento}s.
+     */
+    public List<Relacionamento> relacionamentos() {
+        List<Relacionamento> result = new ArrayList<Relacionamento>();
+        
+        int[][] matriz = this.grafo.getMatrizAdjacencia();
+        
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = i + 1; j < matriz[i].length; j++) {
+                if(matriz[i][j] > 0) {
+                    Pessoa pessoa1 = getPessoa(i);
+                    Pessoa pessoa2 = getPessoa(j);
+                    Relacionamento relacionamento = new Relacionamento(pessoa1, pessoa2, matriz[i][j]);
+                    result.add(relacionamento);
+                }
+            }
+        }
+        return result;
+    }
+    
+    
     /**
      * Imprime o status da rede social. Usuários cadastrados Somatório dos pesos
      * das arestas Númeor de conexões Pessoas conectadas
+     * 
+     * @param   repetirConexoes True, se desejar que a lista retorne conexões
+     *                          repetidas (por exemplo, Sergio-Gabriel e
+     *                          Gabriel-Sergio).
      */
     public void status(boolean repetirConexoes) {
         System.out.println("Status da rede ----------------------------------");
@@ -303,5 +350,16 @@ public class RedeSocial {
             System.out.println("\t" + arrayPessoas[0].getNome() + " está conectado a " + arrayPessoas[1].getNome());
         }
         System.out.println("-------------------------------------------------");
+    }
+
+    
+    /**
+     * Lista de pessoas da rede.
+     * A lista contém apenas as pessoas; não inclui o relacionamento entre elas.
+     * 
+     * @return  Uma {@link ListaPessoas}
+     */
+    public ListaPessoas getListaPessoas() {
+        return listaPessoas;
     }
 }

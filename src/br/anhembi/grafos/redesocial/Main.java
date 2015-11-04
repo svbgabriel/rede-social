@@ -35,10 +35,12 @@ public class Main {
                     + "5 - Distância entre 2 pessoas\n"
                     + "6 - Mostrar árvore mínima\n"
                     + "7 - Status da Rede\n"
-                    + "8 - Sair");
+                    + "8 - Visualização da Rede\n"
+                    + "0 - Sair");
             System.out.println("----- Menu -----");
 
             op = input.nextInt();
+            input.nextLine();
 
             switch (op) {
 
@@ -228,6 +230,10 @@ public class Main {
                     redeSocial.status(true);
                     break;
                 case 8:
+                    System.out.println("-----  Visualização da Rede -----");
+                    new Applet().show(redeSocial);
+                    break;
+                case 0:
                     System.out.println("Encerrando");
                     System.exit(0);
                     break;
@@ -236,7 +242,7 @@ public class Main {
                     break;
             }
 
-        } while (op != 8);
+        } while (op != 0);
     }
 
 }

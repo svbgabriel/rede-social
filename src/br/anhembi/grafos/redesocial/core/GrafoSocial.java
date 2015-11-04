@@ -16,6 +16,12 @@ public class GrafoSocial extends Grafo {
 
     private int[][] matrizAdjacencia;
     
+    
+    public int[][] getMatrizAdjacencia() {
+        return this.matrizAdjacencia;
+    }
+    
+    
     /**
      * Construtor
      * 
@@ -153,11 +159,12 @@ public class GrafoSocial extends Grafo {
      * informe <code>repetirConexoes</code> = <code>false</code>.
      * 
      * @param   repetirConexoes Repete conexões
-     * @return  um array bidimensional, onde i = pessoa da rede, e j o índice
-     *          de seus amigos.
+     * @return  um array bidimensional, onde i = pessoa da rede, e j os índices
+     *          de seus amigos ou -1 se ele não possuir amigos.
      *   Exemplo: [0] = 2,3
      *            [1] = 2
-     *            [2] = 0,3
+     *            [2] = -1
+     *            [3] = 0,3
      */
     public int[][] conexoes(boolean repetirConexoes) {
         int[][] amigos = new int[matrizAdjacencia.length][matrizAdjacencia.length];

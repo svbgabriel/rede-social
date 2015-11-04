@@ -15,4 +15,6 @@ nb-configuration.xml
 *.war
 *.ear
 
+!lib/*.jar
+
 .DS_Store
