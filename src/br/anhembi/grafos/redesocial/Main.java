@@ -97,14 +97,18 @@ public class Main {
                         case 1:
                             System.out.println("Informe o ID da primeira pessoa");
                             id_p1 = input.nextInt();
-                            p1 = redeSocial.getPessoa(id_p1);
+                            //p1 = redeSocial.getPessoa(id_p1);
                             System.out.println("Informe o ID da segunda pessoa");
                             id_p2 = input.nextInt();
-                            p2 = redeSocial.getPessoa(id_p2);
+                            //p2 = redeSocial.getPessoa(id_p2);
                             System.out.println("Quanto tempo se conhecem ?");
                             tempo = input.nextInt();
-                            redeSocial.relacionar(p1, p2, tempo);
-                            System.out.println(p1.getNome() + " e " + p2.getNome() + " forem conectados");
+                            boolean ok = redeSocial.relacionar(id_p1, id_p2, tempo);
+                            if(ok) {
+                                System.out.println("Pessoas foram conectadas.");
+                            } else {
+                                System.out.println("Não foi possível relacionar as pessoas informadas.");
+                            }
                             break;
                         case 2:
                             System.out.println("Informe o nome da primeira pessoa");

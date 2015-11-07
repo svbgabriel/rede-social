@@ -94,17 +94,48 @@ public class RedeSocial {
     /**
      * Relaciona duas pessoas.
      *
-     * @param pessoa1 Pessoa 1
-     * @param pessoa2 Pessoa 2
-     * @param anosRelacionamento Anos de relacionamento entre elas
+     * @param   pessoa1 Pessoa 1
+     * @param   pessoa2 Pessoa 2
+     * @param   anosRelacionamento Anos de relacionamento entre elas
+     * @return  True se o relacionamento foi feito com sucesso.
      */
-    public void relacionar(Pessoa pessoa1, Pessoa pessoa2, int anosRelacionamento) {
+    public boolean relacionar(Pessoa pessoa1, Pessoa pessoa2, int anosRelacionamento) {
         int indicePessoa1 = getListaPessoas().getIndice(pessoa1);
         int indicePessoa2 = getListaPessoas().getIndice(pessoa2);
-
-        this.grafo.adicionaAresta(indicePessoa1, indicePessoa2, anosRelacionamento);
+        if(indicePessoa1 >= 0 && indicePessoa2 >= 0) {
+            this.grafo.adicionaAresta(indicePessoa1, indicePessoa2, anosRelacionamento);
+            return true;
+        }else {
+            return false;
+        }
     }
 
+    
+    /**
+     * Relaciona duas pessoas.
+     * 
+     * @param   indicePessoa1 Índice da pessoa 1
+     * @param   indicePessoa2 Índice da pessoa 2
+     * @param   anosRelacionamento Anos de relacionamento entre elas
+     * @return  True se o relacionamento foi feito com sucesso.
+     */
+    public boolean relacionar(int indicePessoa1, int indicePessoa2, int anosRelacionamento) {
+        Pessoa p = getPessoa(indicePessoa1);
+        if(p == null) {
+            return false;
+        }
+        p = getPessoa(indicePessoa2);
+        if(p == null) {
+            return false;
+        }
+        if(indicePessoa1 >= 0 && indicePessoa2 >= 0) {
+            this.grafo.adicionaAresta(indicePessoa1, indicePessoa2, anosRelacionamento);
+            return true;
+        }else {
+            return false;
+        }
+    }
+    
     
     /**
      * Retorna uma pessoa da rede.
