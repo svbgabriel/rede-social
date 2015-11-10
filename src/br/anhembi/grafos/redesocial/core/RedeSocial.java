@@ -188,11 +188,10 @@ public class RedeSocial {
     public int numeroVerticesEntreDuasPessoas(int indice1, int indice2) {
         int[] antecessores = this.grafo.listaAntecessores(indice1);
 
-        // Errado! O antecessor pode ser a pessoa de índice 0!
-//        if (antecessores[indice2] == 0) {
-//            // A pessoa de indice2 não está conectada a ninguém. (Forever Alone)
-//            return -1;
-//        }
+        if (antecessores[indice2] == 0 && listaPessoas.getPessoa(indice2) == null) {
+            // A pessoa de indice2 não está conectada a ninguém. (Forever Alone)
+            return -1;
+        }
 
         int result = -1;
         int antecessor = indice2;
