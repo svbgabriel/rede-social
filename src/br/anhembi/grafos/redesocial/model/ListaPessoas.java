@@ -39,10 +39,10 @@ public class ListaPessoas {
      * @return Uma instância de {@link model.Pessoa} ou null, se não achar.
      */
     public Pessoa getPessoa(int indice) {
-        if (indice < 0 || indice > getLista().length - 1) {
+        if (indice < 0 || indice > this.lista.length - 1) {
             return null;
         }
-        return this.getLista()[indice];
+        return this.lista[indice];
     }
 
     /**
@@ -56,9 +56,9 @@ public class ListaPessoas {
     public int insere(Pessoa pessoa) {
         // Procura uma posição no vetor que seja null.
         // Se achar, coloca a pessoa nesta posição.
-        for (int i = 0; i < getLista().length; i++) {
-            if (getLista()[i] == null) {
-                lista[i] = pessoa;
+        for (int i = 0; i < this.lista.length; i++) {
+            if (this.lista[i] == null) {
+                this.lista[i] = pessoa;
                 this.quantidade++;
                 return i;
             }
@@ -73,8 +73,8 @@ public class ListaPessoas {
      * @return true, se a remoção foi possível; false, caso contrário.
      */
     public boolean remove(int indice) {
-        if (indice >= 0 && indice < getLista().length) {
-            lista[indice] = null;
+        if (indice >= 0 && indice < this.lista.length) {
+            this.lista[indice] = null;
             this.quantidade--;
             return true;
         }
@@ -102,8 +102,8 @@ public class ListaPessoas {
      * @return o índice da pessoa na rede social (lista).
      */
     public int getIndice(Pessoa pessoa) {
-        for (int i = 0; i < getLista().length; i++) {
-            if (getLista()[i] != null && getLista()[i].equals(pessoa)) {
+        for (int i = 0; i < this.lista.length; i++) {
+            if (this.lista[i] != null && this.lista[i].equals(pessoa)) {
                 return i; // achou a pessoa na lista
             }
         }
@@ -114,6 +114,16 @@ public class ListaPessoas {
      * @return the lista
      */
     public Pessoa[] getLista() {
-        return lista;
+        return this.lista;
+    }
+
+    
+    public Pessoa search(String nome) {
+        for (int i = 0; i < this.lista.length; i++) {
+            if (this.lista[i] != null && this.lista[i].getNome().toLowerCase().contains(nome.toLowerCase())) {
+                return this.lista[i]; // achou a pessoa na lista
+            }
+        }
+        return null;
     }
 }
