@@ -51,15 +51,13 @@ public class RedeSocial {
      * @return true, se foi removida com sucesso, ou false, caso tenha falhado.
      */
     public boolean remove(Pessoa pessoa) {
-        int indicePessoa = getListaPessoas().getIndice(pessoa);
+        int indicePessoa = this.getIndice(pessoa);
 
-        int[] relacionamentos = this.grafo.buscaLargura(indicePessoa);
-
-        int p = this.getIndice(pessoa);
-
-        if (p == -1) {
+        if (indicePessoa == -1) {
             return false;
         }
+
+        int[] relacionamentos = this.grafo.buscaLargura(indicePessoa);
 
         // Remove a pessoa e seus relacionamentos do Grafo
         for (int i = 0; i < relacionamentos.length; i++) {

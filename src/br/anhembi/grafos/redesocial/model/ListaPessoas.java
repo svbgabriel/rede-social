@@ -103,7 +103,7 @@ public class ListaPessoas {
      */
     public int getIndice(Pessoa pessoa) {
         for (int i = 0; i < getLista().length; i++) {
-            if (getLista()[i].equals(pessoa)) {
+            if (getLista()[i] != null && getLista()[i].equals(pessoa)) {
                 return i; // achou a pessoa na lista
             }
         }

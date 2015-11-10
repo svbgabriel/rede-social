@@ -15,11 +15,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int op, idade, op_id_ni, id, idade_p1, idade_p2, tempo, id_p1, id_p2, 
+        int op, idade, op_id_ni, id, idade_p1, idade_p2, tempo, id_p1, id_p2,
                 numeroVertices;
         String nome, nome_p1, nome_p2;
 
         Scanner input = new Scanner(System.in);
+        Scanner inputs = new Scanner(System.in);
 
         Pessoa p1, p2;
 
@@ -47,7 +48,7 @@ public class Main {
                 case 1:
                     System.out.println("----- Adicionar -----");
                     System.out.println("Informe o nome da pessoa");
-                    nome = input.nextLine();
+                    nome = inputs.nextLine();
                     System.out.println("Informe a idade da pessoa");
                     idade = input.nextInt();
                     p1 = new Pessoa(nome, idade);
@@ -70,7 +71,7 @@ public class Main {
                             break;
                         case 2:
                             System.out.println("Informe o nome da pessoa");
-                            nome = input.nextLine();
+                            nome = inputs.nextLine();
                             System.out.println("Informe a idade da pessoa");
                             idade = input.nextInt();
                             p1 = new Pessoa(nome, idade);
@@ -97,14 +98,12 @@ public class Main {
                         case 1:
                             System.out.println("Informe o ID da primeira pessoa");
                             id_p1 = input.nextInt();
-                            //p1 = redeSocial.getPessoa(id_p1);
                             System.out.println("Informe o ID da segunda pessoa");
                             id_p2 = input.nextInt();
-                            //p2 = redeSocial.getPessoa(id_p2);
                             System.out.println("Quanto tempo se conhecem ?");
                             tempo = input.nextInt();
                             boolean ok = redeSocial.relacionar(id_p1, id_p2, tempo);
-                            if(ok) {
+                            if (ok) {
                                 System.out.println("Pessoas foram conectadas.");
                             } else {
                                 System.out.println("Não foi possível relacionar as pessoas informadas.");
@@ -112,12 +111,12 @@ public class Main {
                             break;
                         case 2:
                             System.out.println("Informe o nome da primeira pessoa");
-                            nome_p1 = input.nextLine();
+                            nome_p1 = inputs.nextLine();
                             System.out.println("Informe a idade da primeira pessoa");
                             idade_p1 = input.nextInt();
                             p1 = new Pessoa(nome_p1, idade_p1);
                             System.out.println("Informe o nome da segunda pessoa");
-                            nome_p2 = input.nextLine();
+                            nome_p2 = inputs.nextLine();
                             System.out.println("Informe a idade da segunda pessoa");
                             idade_p2 = input.nextInt();
                             p2 = new Pessoa(nome_p2, idade_p2);
@@ -155,7 +154,7 @@ public class Main {
                             break;
                         case 2:
                             System.out.println("Informe o nome da pessoa");
-                            nome = input.nextLine();
+                            nome = inputs.nextLine();
                             System.out.println("Informe a idade da pessoa");
                             idade = input.nextInt();
                             p1 = new Pessoa(nome, idade);
@@ -194,12 +193,12 @@ public class Main {
                             break;
                         case 2:
                             System.out.println("Informe o nome da primeira pessoa");
-                            nome_p1 = input.nextLine();
+                            nome_p1 = inputs.nextLine();
                             System.out.println("Informe a idade da primeira pessoa");
                             idade_p1 = input.nextInt();
                             p1 = new Pessoa(nome_p1, idade_p1);
                             System.out.println("Informe o nome da segunda pessoa");
-                            nome_p2 = input.nextLine();
+                            nome_p2 = inputs.nextLine();
                             System.out.println("Informe a idade da segunda pessoa");
                             idade_p2 = input.nextInt();
                             p2 = new Pessoa(nome_p2, idade_p2);
