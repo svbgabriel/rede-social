@@ -188,7 +188,7 @@ public class RedeSocial {
     public int numeroVerticesEntreDuasPessoas(int indice1, int indice2) {
         int[] antecessores = this.grafo.listaAntecessores(indice1);
 
-        if (antecessores[indice2] == 0) {
+        if (antecessores[indice2] == 0 && listaPessoas.getPessoa(indice2) == null) {
             // A pessoa de indice2 não está conectada a ninguém. (Forever Alone)
             return -1;
         }
@@ -231,24 +231,30 @@ public class RedeSocial {
      * @return uma string com os vértices da árvore mínima. Exemplo: "[0,2],
      * [0,3] [1,2], [0,0], [0,0], "
      */
-    public String getArvoreMinima(int verticeInicial) {
-        if (verticeInicial < 0 || verticeInicial > this.tamanho - 1) {
-            return this.grafo.kruskal();
-        } else {
-            return this.grafo.prim(verticeInicial);
-        }
-    }
+//    public String getArvoreMinima(int verticeInicial) {
+//        if (verticeInicial < 0 || verticeInicial > this.tamanho - 1) {
+//            return this.grafo.kruskal();
+//        } else {
+//            return this.grafo.prim(verticeInicial);
+//        }
+//    }
 
     /**
      * Retorna a lista de {@link Pessoa}s da árvore mínima.
      *
      * @return uma lista de duplas de {@link Pessoa}s.
      */
-    public List<Pessoa[]> getArvoreMinima() {
+    public List<Pessoa[]> getArvoreMinima(int verticeInicial) {
         List<Pessoa[]> result = new ArrayList<Pessoa[]>();
 
-        String arvore = this.grafo.kruskal();
+        String arvore;
 
+        if (verticeInicial < 0 || verticeInicial > this.tamanho - 1) {
+            arvore = this.grafo.kruskal();
+        } else {
+            arvore = this.grafo.prim(verticeInicial);
+        }
+        
         // A string da árvore mínima está retornando com ", " no final.
         // Aqui removemos o ", ".
         if (arvore.endsWith(", ")) {

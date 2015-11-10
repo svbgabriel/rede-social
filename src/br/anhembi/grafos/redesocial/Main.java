@@ -159,8 +159,7 @@ public class Main {
                             idade = input.nextInt();
                             p1 = new Pessoa(nome, idade);
                             id = redeSocial.getIndice(p1);
-                            p1 = redeSocial.getPessoa(id);
-                            if (p1 != null) {
+                            if (id >= 0) {
                                 System.out.println("Amigos de " + p1.getNome() + ":");
                                 for (Pessoa p : redeSocial.listaAmigos(id)) {
                                     System.out.println(p.toString());
@@ -213,16 +212,21 @@ public class Main {
                 case 6:
                     System.out.println("-----  Árvore mínima -----");
                     System.out.println("Escolha 1 - Prim 2 - Kruskal");
+                    List<Pessoa[]> arvoreMinima;
                     op_id_ni = input.nextInt();
                     switch (op_id_ni) {
                         case 1:
-                            System.out.println(redeSocial.getArvoreMinima(0));
-                            break;
-                        case 2:
-                            List<Pessoa[]> arvoreMinima = redeSocial.getArvoreMinima();
+                            arvoreMinima = redeSocial.getArvoreMinima(0);
                             for (Pessoa[] arrayPessoas : arvoreMinima) {
                                 System.out.println(arrayPessoas[0].getNome() + " --- " + arrayPessoas[1].getNome());
                             }
+                            break;
+                        case 2:
+                            arvoreMinima = redeSocial.getArvoreMinima(-1);
+                            for (Pessoa[] arrayPessoas : arvoreMinima) {
+                                System.out.println(arrayPessoas[0].getNome() + " --- " + arrayPessoas[1].getNome());
+                            }
+                            break;
                         default:
                             System.out.println("Opção inválida,escolha novamente");
                             break;
