@@ -42,7 +42,12 @@ public class UserInterface {
     }
     
     public int pegaOpcaoInt() {
-        int res = scanner.nextInt();
+        int res;
+        try {
+            res = scanner.nextInt();
+        } catch(Exception e) {
+            res = -1;
+        }
         scanner.nextLine();
         return res;
     }

@@ -58,6 +58,7 @@ public class ListaPessoas {
         // Se achar, coloca a pessoa nesta posição.
         for (int i = 0; i < this.lista.length; i++) {
             if (this.lista[i] == null) {
+                pessoa.setId(i);
                 this.lista[i] = pessoa;
                 this.quantidade++;
                 return i;
