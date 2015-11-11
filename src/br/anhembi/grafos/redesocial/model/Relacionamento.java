@@ -3,9 +3,9 @@ package br.anhembi.grafos.redesocial.model;
 /**
  * Representa um relacionamento entre duas {@link Pessoa}s.
  * 
- * @author Gabriel Batista
- * @author Henrique Albanese
- * @author Sérgio Umlauf
+ * @author  Gabriel Batista
+ * @author  Henrique Albanese
+ * @author  Sérgio Umlauf
  */
 public class Relacionamento {
     private Pessoa pessoa1;

@@ -8,8 +8,9 @@ import java.util.StringTokenizer;
 /**
  * Classe para gerenciar a adição e remoção de relacionamentos na rede social.
  *
- * Esta classe manipula a classe Grafo, que deve ser mantida o mais próximo
- * possível da original disponibilizada pelo professor.
+ * Esta classe manipula a classe GrafoSocial, que extende a classe Grafo,
+ * que deve ser mantida o mais próximo possível da original disponibilizada 
+ * pelo professor.
  *
  * A ideia é utilizar apenas esta classe na classe principal do programa (Main).
  *

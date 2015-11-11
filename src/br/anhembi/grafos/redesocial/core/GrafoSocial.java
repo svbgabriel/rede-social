@@ -8,9 +8,9 @@ import java.util.ArrayList;
  * Esta classe extende a classe {@link Grafo}, com métodos específicos
  * para a manipulação do grafo.
  * 
- * @author Gabriel Batista
- * @author Henrique Albanese
- * @author Sérgio Umlauf
+ * @author  Gabriel Batista
+ * @author  Henrique Albanese
+ * @author  Sérgio Umlauf
  */
 public class GrafoSocial extends Grafo {
 
@@ -25,7 +25,7 @@ public class GrafoSocial extends Grafo {
     /**
      * Construtor
      * 
-     * @param   matrizAdjacencia Matriz de adjacência
+     * @param matrizAdjacencia  Matriz de adjacência
      */
     public GrafoSocial(int[][] matrizAdjacencia) {
         super(matrizAdjacencia);
@@ -36,9 +36,9 @@ public class GrafoSocial extends Grafo {
     /**
      * Adiciona uma aresta ao grafo.
      * 
-     * @param   i Vértice 1 da aresta
-     * @param   j Vértice 2 da aresta
-     * @param   peso Peso da aresta
+     * @param i         Vértice 1 da aresta
+     * @param j         Vértice 2 da aresta
+     * @param peso      Peso da aresta
      */
     public void adicionaAresta(int i, int j, int peso) {
         this.matrizAdjacencia[i][j] = peso;
@@ -49,8 +49,8 @@ public class GrafoSocial extends Grafo {
     /**
      * Remove uma aresta do grafo.
      * 
-     * @param   i Vértice 1 da aresta
-     * @param   j Vértice 2 da aresta
+     * @param i         Vértice 1 da aresta
+     * @param j         Vértice 2 da aresta
      */
     public void removeAresta(int i, int j) {
         this.matrizAdjacencia[i][j] = 0;
@@ -60,8 +60,8 @@ public class GrafoSocial extends Grafo {
     /**
      * Retorna os vizinhos de um nó.
      * 
-     * @param   vertice Índice do nó
-     * @return  Um ArrayList de índices dos nós vizinhos
+     * @param vertice   Índice do nó
+     * @return          Um ArrayList de índices dos nós vizinhos
      */
     public ArrayList<Integer> vizinhos(int vertice) {
         ArrayList<Integer> result = new ArrayList<Integer>();
@@ -78,9 +78,9 @@ public class GrafoSocial extends Grafo {
      * Retorna uma lista com os nós antecessores de um vértice.
      * Utiliza o algoritmo de Dijkstra.
      * 
-     * @param   verticeInicial Vértice inicial para análise.
-     * @return  Um Array com os índices dos vértices antecessores.
-     * @see     grafo.Grafo#djikistra(int)
+     * @param verticeInicial    Vértice inicial para análise.
+     * @return                  Um Array com os índices dos vértices antecessores.
+     * @see                     grafo.Grafo#djikistra(int)
      */
     public int[] listaAntecessores(int verticeInicial) {
 
@@ -136,7 +136,7 @@ public class GrafoSocial extends Grafo {
      * a somatória dos pesos em um grafo valorado, como o utilizado em 
      * uma rede social.
      * 
-     * @return O número de arestas.
+     * @return          O número de arestas.
      */
     public int quantidadeArestas() {
         int num = 0;
@@ -158,13 +158,13 @@ public class GrafoSocial extends Grafo {
      * Para não repetir conexões (exemplo: Sergio-Henrique e Henrique-Sergio),
      * informe <code>repetirConexoes</code> = <code>false</code>.
      * 
-     * @param   repetirConexoes Repete conexões
-     * @return  um array bidimensional, onde i = pessoa da rede, e j os índices
-     *          de seus amigos ou -1 se ele não possuir amigos.
-     *   Exemplo: [0] = 2,3
-     *            [1] = 2
-     *            [2] = -1
-     *            [3] = 0,3
+     * @param repetirConexoes   Repete conexões
+     * @return                  um array bidimensional, onde i = pessoa da rede, e j os índices
+     *                          de seus amigos ou -1 se ele não possuir amigos.
+     *                          Exemplo:    [0] = 2,3
+     *                                      [1] = 2
+     *                                      [2] = -1
+     *                                      [3] = 0,3
      */
     public int[][] conexoes(boolean repetirConexoes) {
         int[][] amigos = new int[matrizAdjacencia.length][matrizAdjacencia.length];

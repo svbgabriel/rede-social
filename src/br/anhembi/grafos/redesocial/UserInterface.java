@@ -5,8 +5,11 @@ import br.anhembi.grafos.redesocial.model.Relacionamento;
 import java.util.Scanner;
 
 /**
- *
- * @author sumlauf
+ * Classe para manipulação da entrada de dados pelo usuário.
+ * 
+ * @author  Gabriel Batista
+ * @author  Henrique Albanese
+ * @author  Sérgio Umlauf
  */
 public class UserInterface {
     

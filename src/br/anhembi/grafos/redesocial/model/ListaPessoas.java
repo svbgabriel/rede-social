@@ -5,9 +5,9 @@ package br.anhembi.grafos.redesocial.model;
  * remove pessoas da rede, como um cadastro na rede. Ele não associa pessoas.
  * Para isso, use {@link RedeSocial}.
  *
- * @author Gabriel Batista
- * @author Henrique Albanese
- * @author Sérgio Umlauf
+ * @author  Gabriel Batista
+ * @author  Henrique Albanese
+ * @author  Sérgio Umlauf
  */
 public class ListaPessoas {
 
@@ -17,7 +17,7 @@ public class ListaPessoas {
     /**
      * Construtor
      *
-     * @param tamanho Quantidade máxima de pessoas da rede.
+     * @param tamanho   Quantidade máxima de pessoas da rede.
      */
     public ListaPessoas(int tamanho) {
         lista = new Pessoa[tamanho];
@@ -26,7 +26,7 @@ public class ListaPessoas {
     /**
      * Quantidade de pessoas na lista.
      *
-     * @return A quantidade de pessoas.
+     * @return          A quantidade de pessoas.
      */
     public int getQuantidade() {
         return this.quantidade;
@@ -35,8 +35,8 @@ public class ListaPessoas {
     /**
      * Busca uma pessoa por seu índice.
      *
-     * @param indice Índice da pessoa
-     * @return Uma instância de {@link model.Pessoa} ou null, se não achar.
+     * @param indice    Índice da pessoa
+     * @return          Uma instância de {@link model.Pessoa} ou null, se não achar.
      */
     public Pessoa getPessoa(int indice) {
         if (indice < 0 || indice > this.lista.length - 1) {
@@ -50,8 +50,8 @@ public class ListaPessoas {
      * procura por uma posição "vazia" na lista e insere a pessoa na primeira
      * que achar.
      *
-     * @param pessoa Uma instância de Pessoa
-     * @return O índice da pessoa na lista ou -1, se não foi possível inseri-la.
+     * @param pessoa    Uma instância de Pessoa
+     * @return          O índice da pessoa na lista ou -1, se não foi possível inseri-la.
      */
     public int insere(Pessoa pessoa) {
         // Procura uma posição no vetor que seja null.
@@ -70,8 +70,8 @@ public class ListaPessoas {
     /**
      * Remove a pessoa da lista (pessoa é "escluída da rede").
      *
-     * @param indice Índice da pessoa
-     * @return true, se a remoção foi possível; false, caso contrário.
+     * @param indice    Índice da pessoa
+     * @return          true, se a remoção foi possível; false, caso contrário.
      */
     public boolean remove(int indice) {
         if (indice >= 0 && indice < this.lista.length) {
@@ -85,9 +85,9 @@ public class ListaPessoas {
     /**
      * Remove a pessoa da lista (pessoa é "escluída da rede").
      *
-     * @param pessoa Uma instância de Pessoa
-     * @return true, se a remoção foi possível; false, caso contrário.
-     * @see remove(int)
+     * @param pessoa    Uma instância de Pessoa
+     * @return          true, se a remoção foi possível; false, caso contrário.
+     * @see             remove(int)
      */
     public boolean remove(Pessoa pessoa) {
         int indice = this.getIndice(pessoa);
@@ -99,8 +99,8 @@ public class ListaPessoas {
      * precisa do índice da pessoa para manipulá-la na rede, mas só tem uma
      * instância de {@link model.Pessoa}.
      *
-     * @param pessoa uma instância de {@link model.Pessoa}
-     * @return o índice da pessoa na rede social (lista).
+     * @param pessoa    uma instância de {@link model.Pessoa}
+     * @return          o índice da pessoa na rede social (lista).
      */
     public int getIndice(Pessoa pessoa) {
         for (int i = 0; i < this.lista.length; i++) {
@@ -112,13 +112,19 @@ public class ListaPessoas {
     }
 
     /**
-     * @return the lista
+     * @return          the lista
      */
     public Pessoa[] getLista() {
         return this.lista;
     }
 
     
+    /**
+     * Procura uma pessoa por parte do nome.
+     * 
+     * @param nome      Todo ou parte do nome (case insensitive)
+     * @return          Uma {@link Pessoa} ou null, se não achar
+     */
     public Pessoa search(String nome) {
         for (int i = 0; i < this.lista.length; i++) {
             if (this.lista[i] != null && this.lista[i].getNome().toLowerCase().contains(nome.toLowerCase())) {

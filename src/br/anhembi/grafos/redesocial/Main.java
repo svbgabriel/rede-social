@@ -6,9 +6,9 @@ import java.util.List;
 
 /**
  *
- * @author Gabriel Batista
- * @author Henrique Albanese
- * @author Sérgio Umlauf
+ * @author  Gabriel Batista
+ * @author  Henrique Albanese
+ * @author  Sérgio Umlauf
  */
 public class Main {
     
