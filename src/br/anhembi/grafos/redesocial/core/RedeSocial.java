@@ -186,6 +186,10 @@ public class RedeSocial {
      * pessaos estiverem conectadas diretamente; -1 se não estiverem conectadas.
      */
     public int numeroVerticesEntreDuasPessoas(int indice1, int indice2) {
+        if (indice1 == -1 || indice2 == -1) {
+            return -1;
+        }
+        
         int[] antecessores = this.grafo.listaAntecessores(indice1);
 
         if (antecessores[indice2] == 0 && listaPessoas.getPessoa(indice2) == null) {
@@ -231,13 +235,6 @@ public class RedeSocial {
      * @return uma string com os vértices da árvore mínima. Exemplo: "[0,2],
      * [0,3] [1,2], [0,0], [0,0], "
      */
-//    public String getArvoreMinima(int verticeInicial) {
-//        if (verticeInicial < 0 || verticeInicial > this.tamanho - 1) {
-//            return this.grafo.kruskal();
-//        } else {
-//            return this.grafo.prim(verticeInicial);
-//        }
-//    }
 
     /**
      * Retorna a lista de {@link Pessoa}s da árvore mínima.

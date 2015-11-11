@@ -2,7 +2,6 @@ package br.anhembi.grafos.redesocial;
 
 import br.anhembi.grafos.redesocial.model.Pessoa;
 import br.anhembi.grafos.redesocial.model.Relacionamento;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**

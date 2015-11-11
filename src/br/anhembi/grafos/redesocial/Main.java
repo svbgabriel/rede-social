@@ -2,9 +2,7 @@ package br.anhembi.grafos.redesocial;
 
 import br.anhembi.grafos.redesocial.core.RedeSocial;
 import br.anhembi.grafos.redesocial.model.*;
-import java.io.Console;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -187,7 +185,6 @@ public class Main {
         ui.mostraMensagem("Deseja procurar por: [1] ID ou [2] Nome e idade?");
         int opcao = ui.pegaOpcaoInt();
         
-        Pessoa p;
         int numeroVertices;
         
         switch (opcao) {
