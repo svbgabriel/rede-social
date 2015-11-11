@@ -3,7 +3,6 @@ package br.anhembi.grafos.redesocial;
 import br.anhembi.grafos.redesocial.core.RedeSocial;
 import br.anhembi.grafos.redesocial.model.*;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -12,244 +11,254 @@ import java.util.Scanner;
  * @author Sérgio Umlauf
  */
 public class Main {
+    
+    private static UserInterface ui;
+    private static RedeSocial redeSocial;
 
     public static void main(String[] args) {
 
-        int op, idade, op_id_ni, id, idade_p1, idade_p2, tempo, id_p1, id_p2,
-                numeroVertices;
-        String nome, nome_p1, nome_p2;
-
-        Scanner input = new Scanner(System.in);
-        Scanner inputs = new Scanner(System.in);
-
-        Pessoa p1, p2;
-
-        RedeSocial redeSocial = new RedeSocial(50);
+        redeSocial = new RedeSocial(50);
+        ui = new UserInterface();
+        int opcao;
 
         do {
-            System.out.println("----- Rede Social -----");
-            System.out.println("----- Menu -----");
-            System.out.println("1 - Adicionar pessoa\n"
-                    + "2 - Remover pessoa\n"
-                    + "3 - Conectar pessoas\n"
-                    + "4 - Amigos de uma pessoa\n"
-                    + "5 - Distância entre 2 pessoas\n"
-                    + "6 - Mostrar árvore mínima\n"
-                    + "7 - Status da Rede\n"
-                    + "8 - Visualização da Rede\n"
-                    + "0 - Sair");
-            System.out.println("----- Menu -----");
+            ui.mostraMenuPrinciapal();
+            opcao = ui.pegaOpcaoInt();
 
-            op = input.nextInt();
-            input.nextLine();
-
-            switch (op) {
-
-                case 1:
-                    System.out.println("----- Adicionar -----");
-                    System.out.println("Informe o nome da pessoa");
-                    nome = inputs.nextLine();
-                    System.out.println("Informe a idade da pessoa");
-                    idade = input.nextInt();
-                    p1 = new Pessoa(nome, idade);
-                    redeSocial.insere(p1);
-                    System.out.println(nome + " de " + idade + " anos adicionado");
-                    break;
-                case 2:
-                    System.out.println("----- Remover -----");
-                    System.out.println("Deseja remover por: 1 -ID ou 2 - Nome e idade");
-                    op_id_ni = input.nextInt();
-                    switch (op_id_ni) {
-                        case 1:
-                            System.out.println("Informe o ID da pessoa");
-                            id = input.nextInt();
-                            if (redeSocial.remove(id)) {
-                                System.out.println("Remoção concluída");
-                            } else {
-                                System.out.println("Erro na remoção");
-                            }
-                            break;
-                        case 2:
-                            System.out.println("Informe o nome da pessoa");
-                            nome = inputs.nextLine();
-                            System.out.println("Informe a idade da pessoa");
-                            idade = input.nextInt();
-                            p1 = new Pessoa(nome, idade);
-                            if (redeSocial.remove(p1)) {
-                                System.out.println(nome + " de " + idade + " anos removido");
-                            } else {
-                                System.out.println("Não foi possível remover, favor rever os dados informados");
-                            }
-                            break;
-                        default:
-                            System.out.println("Opção inválida,escolha novamente");
-                            break;
-                    }
-                    break;
-                case 3:
-                    if (redeSocial.getQuantidade() < 2) {
-                        System.out.println("É preciso pelo menos duas pessoas na Rede");
-                        break;
-                    }
-                    System.out.println("----- Conectar -----");
-                    System.out.println("Deseja conectar por: 1 -ID ou 2 - Nome e idade");
-                    op_id_ni = input.nextInt();
-                    switch (op_id_ni) {
-                        case 1:
-                            System.out.println("Informe o ID da primeira pessoa");
-                            id_p1 = input.nextInt();
-                            System.out.println("Informe o ID da segunda pessoa");
-                            id_p2 = input.nextInt();
-                            System.out.println("Quanto tempo se conhecem ?");
-                            tempo = input.nextInt();
-                            boolean ok = redeSocial.relacionar(id_p1, id_p2, tempo);
-                            if (ok) {
-                                System.out.println("Pessoas foram conectadas.");
-                            } else {
-                                System.out.println("Não foi possível relacionar as pessoas informadas.");
-                            }
-                            break;
-                        case 2:
-                            System.out.println("Informe o nome da primeira pessoa");
-                            nome_p1 = inputs.nextLine();
-                            System.out.println("Informe a idade da primeira pessoa");
-                            idade_p1 = input.nextInt();
-                            p1 = new Pessoa(nome_p1, idade_p1);
-                            System.out.println("Informe o nome da segunda pessoa");
-                            nome_p2 = inputs.nextLine();
-                            System.out.println("Informe a idade da segunda pessoa");
-                            idade_p2 = input.nextInt();
-                            p2 = new Pessoa(nome_p2, idade_p2);
-                            System.out.println("Quanto tempo se conhecem ?");
-                            tempo = input.nextInt();
-                            redeSocial.relacionar(p1, p2, tempo);
-                            System.out.println(nome_p1 + " e " + nome_p2 + " forem conectados");
-                            break;
-                        default:
-                            System.out.println("Opção inválida,escolha novamente");
-                            break;
-                    }
-                    break;
-                case 4:
-                    if (redeSocial.getQuantidade() < 2) {
-                        System.out.println("É preciso pelo menos duas pessoas na Rede");
-                        break;
-                    }
-                    System.out.println("----- Amigos de uma pessoa -----");
-                    System.out.println("Deseja procurar por: 1 -ID ou 2 - Nome e idade");
-                    op_id_ni = input.nextInt();
-                    switch (op_id_ni) {
-                        case 1:
-                            System.out.println("Informe o ID da pessoa");
-                            id = input.nextInt();
-                            Pessoa pessoa = redeSocial.getPessoa(id);
-                            if (pessoa != null) {
-                                System.out.println("Amigos de " + pessoa.getNome() + ":");
-                                for (Pessoa p : redeSocial.listaAmigos(id)) {
-                                    System.out.println(p.toString());
-                                }
-                            } else {
-                                System.out.println("Pessoa não existe!");
-                            }
-                            break;
-                        case 2:
-                            System.out.println("Informe o nome da pessoa");
-                            nome = inputs.nextLine();
-                            System.out.println("Informe a idade da pessoa");
-                            idade = input.nextInt();
-                            p1 = new Pessoa(nome, idade);
-                            id = redeSocial.getIndice(p1);
-                            if (id >= 0) {
-                                System.out.println("Amigos de " + p1.getNome() + ":");
-                                for (Pessoa p : redeSocial.listaAmigos(id)) {
-                                    System.out.println(p.toString());
-                                }
-                            } else {
-                                System.out.println("Pessoa não existe!");
-                            }
-                            break;
-                        default:
-                            System.out.println("Opção inválida,escolha novamente");
-                            break;
-                    }
-                    break;
-                case 5:
-                    if (redeSocial.getQuantidade() < 2) {
-                        System.out.println("É preciso pelo menos duas pessoas na Rede");
-                        break;
-                    }
-                    System.out.println("----- Distância entre 2 pessoas -----");
-                    System.out.println("Deseja procurar por: 1 -ID ou 2 - Nome e idade");
-                    op_id_ni = input.nextInt();
-                    switch (op_id_ni) {
-                        case 1:
-                            System.out.println("Informe o ID da primeira pessoa");
-                            id_p1 = input.nextInt();
-                            System.out.println("Informe o ID da segunda pessoa");
-                            id_p2 = input.nextInt();
-                            numeroVertices = redeSocial.numeroVerticesEntreDuasPessoas(id_p1, id_p2);
-                            System.out.println("Número de vértices: " + numeroVertices);
-                            break;
-                        case 2:
-                            System.out.println("Informe o nome da primeira pessoa");
-                            nome_p1 = inputs.nextLine();
-                            System.out.println("Informe a idade da primeira pessoa");
-                            idade_p1 = input.nextInt();
-                            p1 = new Pessoa(nome_p1, idade_p1);
-                            System.out.println("Informe o nome da segunda pessoa");
-                            nome_p2 = inputs.nextLine();
-                            System.out.println("Informe a idade da segunda pessoa");
-                            idade_p2 = input.nextInt();
-                            p2 = new Pessoa(nome_p2, idade_p2);
-                            numeroVertices = redeSocial.numeroVerticesEntreDuasPessoas(p1, p2);
-                            System.out.println("Número de vértices: " + numeroVertices);
-                            break;
-                        default:
-                            System.out.println("Opção inválida,escolha novamente");
-                            break;
-                    }
-                    break;
-                case 6:
-                    System.out.println("-----  Árvore mínima -----");
-                    System.out.println("Escolha 1 - Prim 2 - Kruskal");
-                    List<Pessoa[]> arvoreMinima;
-                    op_id_ni = input.nextInt();
-                    switch (op_id_ni) {
-                        case 1:
-                            arvoreMinima = redeSocial.getArvoreMinima(0);
-                            for (Pessoa[] arrayPessoas : arvoreMinima) {
-                                System.out.println(arrayPessoas[0].getNome() + " --- " + arrayPessoas[1].getNome());
-                            }
-                            break;
-                        case 2:
-                            arvoreMinima = redeSocial.getArvoreMinima(-1);
-                            for (Pessoa[] arrayPessoas : arvoreMinima) {
-                                System.out.println(arrayPessoas[0].getNome() + " --- " + arrayPessoas[1].getNome());
-                            }
-                            break;
-                        default:
-                            System.out.println("Opção inválida,escolha novamente");
-                            break;
-                    }
-                    break;
-                case 7:
-                    System.out.println("-----  Status da Rede -----");
-                    redeSocial.status(true);
-                    break;
-                case 8:
-                    System.out.println("-----  Visualização da Rede -----");
-                    new Applet().show(redeSocial);
-                    break;
+            switch (opcao) {
+                case 1: adicionarPessoa(); break;
+                case 2: removerPessoa(); break;
+                case 3: conectarPessoas(); break;
+                case 4: mostrarAmigosDaPessoa(); break;
+                case 5: mostrarDistanciaEntreDuasPessoas(); break;
+                case 6: mostraArvoreMinima(); break;
+                case 7: mostraStatusRede(); break;
+                case 8: procurarPessoa(); break;
+                case 9: visualizarRede(); break;
                 case 0:
-                    System.out.println("Encerrando");
+                    ui.mostraMensagem("Bye.");
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("Opção inválida escolha novamente");
+                    ui.mostraMensagem("Opção inválida. Escolha novamente.");
                     break;
             }
-
-        } while (op != 0);
+        } while (opcao != 0);
     }
 
+    
+    
+
+    // Private Methods ---------------------------------------------------------
+    
+    private static void adicionarPessoa() {
+        ui.mostraMensagem("============== Adicionar pessoa ==============");
+        Pessoa p = ui.pegaPessoaPorNomeIdade("pessoa");
+        redeSocial.insere(p);
+        ui.mostraMensagem(p.getNome() + " de " + p.getIdade() + " anos adicionado");
+        ui.mostraMensagem("==============================================");
+    }
+
+    
+    private static void removerPessoa() {
+        ui.mostraMensagem("============== Remover pessoa ==============");
+        ui.mostraMensagem("Deseja remover por: [1] ID ou [2] Nome e idade?");
+        int opcao = ui.pegaOpcaoInt();
+        switch (opcao) {
+            case 1:
+                int id = ui.pegaIDPessoa();
+                if (redeSocial.remove(id)) {
+                    ui.mostraMensagem("Remoção concluída");
+                } else {
+                    ui.mostraMensagem("Erro na remoção");
+                }
+                break;
+            case 2:
+                Pessoa p = ui.pegaPessoaPorNomeIdade("pessoa");
+                if (redeSocial.remove(p)) {
+                   ui.mostraMensagem(p + " removido(a).");
+                } else {
+                    ui.mostraMensagem("Não foi possível remover, favor rever os dados informados");
+                }
+                break;
+            default:
+                ui.mostraMensagem("Opção inválida. Escolha novamente.");
+                break;
+        }
+        ui.mostraMensagem("============================================");
+    }
+
+    
+    private static void conectarPessoas() {
+        if (redeSocial.getQuantidade() < 2) {
+            ui.mostraMensagem("É preciso pelo menos duas pessoas na Rede");
+            return;
+        }
+        
+        ui.mostraMensagem("============= Conectar pessoas =============");
+        ui.mostraMensagem("Deseja conectar por: [1] ID ou [2] Nome e idade?");
+        int opcao = ui.pegaOpcaoInt();
+        
+        Relacionamento rel;
+        boolean ok;
+        
+        switch (opcao) {
+            case 1:
+                rel = ui.pegaDadosRelacionarPorID();
+                ok = redeSocial.relacionar(rel.getIdPessoa1(), rel.getIdPessoa2(), rel.getAnosRelacionamento());
+                if (ok) {
+                    ui.mostraMensagem("Pessoas foram conectadas.");
+                } else {
+                    ui.mostraMensagem("Não foi possível relacionar as pessoas informadas.");
+                }
+                break;
+            case 2:
+                rel = ui.pegaDadosRelacionarPorNomeIdade();
+                ok = redeSocial.relacionar(rel.getPessoa1(), rel.getPessoa2(), rel.getAnosRelacionamento());
+                if (ok) {
+                    ui.mostraMensagem(rel.getPessoa1() + " e " + rel.getPessoa2() + " forem conectados");
+                } else {
+                    ui.mostraMensagem("Não foi possível relacionar as pessoas informadas.");
+                }
+                break;
+            default:
+                ui.mostraMensagem("Opção inválida. Escolha novamente.");
+                break;
+        }
+        ui.mostraMensagem("============================================");
+    }
+
+    
+    private static void mostrarAmigosDaPessoa() {
+        if (redeSocial.getQuantidade() < 2) {
+            ui.mostraMensagem("É preciso pelo menos duas pessoas na Rede");
+            return;
+        }
+        
+        ui.mostraMensagem("=========== Amigos de uma pessoa ===========");
+        ui.mostraMensagem("Deseja procurar por: [1] ID ou [2] Nome e idade?");
+        int opcao = ui.pegaOpcaoInt();
+        
+        int id;
+        Pessoa p;
+        
+        switch (opcao) {
+            case 1:
+                id = ui.pegaIDPessoa();
+                Pessoa pessoa = redeSocial.getPessoa(id);
+                if (pessoa != null) {
+                    ui.mostraMensagem("Amigos de " + pessoa.getNome() + ":");
+                    for (Pessoa pe : redeSocial.listaAmigos(id)) {
+                        ui.mostraMensagem(pe.toString());
+                    }
+                } else {
+                    ui.mostraMensagem("Pessoa não existe!");
+                }
+                break;
+            case 2:
+                p = ui.pegaPessoaPorNomeIdade("pessoa");
+                id = redeSocial.getIndice(p);
+                if (id >= 0) {
+                    ui.mostraMensagem("Amigos de " + p.getNome() + ":");
+                    for (Pessoa pe : redeSocial.listaAmigos(id)) {
+                        ui.mostraMensagem(pe.toString());
+                    }
+                } else {
+                    ui.mostraMensagem("Pessoa não existe!");
+                }
+                break;
+            default:
+                ui.mostraMensagem("Opção inválida. Escolha novamente.");
+                break;
+        }
+        ui.mostraMensagem("============================================");
+    }
+
+    
+    private static void mostrarDistanciaEntreDuasPessoas() {
+        if (redeSocial.getQuantidade() < 2) {
+            ui.mostraMensagem("É preciso pelo menos duas pessoas na Rede");
+            return;
+        }
+        
+        ui.mostraMensagem("======== Distância entre 2 pessoas ========");
+        ui.mostraMensagem("Deseja procurar por: [1] ID ou [2] Nome e idade?");
+        int opcao = ui.pegaOpcaoInt();
+        
+        int numeroVertices;
+        
+        switch (opcao) {
+            case 1:
+                int[] ids = ui.pegaIDDuasPessoas();
+                numeroVertices = redeSocial.numeroVerticesEntreDuasPessoas(ids[0], ids[1]);
+                ui.mostraMensagem("Número de vértices: " + numeroVertices);
+                break;
+            case 2:
+                Pessoa p1 = ui.pegaPessoaPorNomeIdade("primeira pessoa");
+                Pessoa p2 = ui.pegaPessoaPorNomeIdade("segunda pessoa");
+                numeroVertices = redeSocial.numeroVerticesEntreDuasPessoas(p1, p2);
+                ui.mostraMensagem("Número de vértices: " + numeroVertices);
+                break;
+            default:
+                ui.mostraMensagem("Opção inválida. Escolha novamente.");
+                break;
+        }
+        ui.mostraMensagem("============================================");
+    }
+
+    
+    private static void mostraArvoreMinima() {
+        ui.mostraMensagem("==============  Árvore mínima ==============");
+        ui.mostraMensagem("Escolha [1] Prim ou [2] Kruskal");
+        int opcao = ui.pegaOpcaoInt();
+        
+        List<Pessoa[]> arvoreMinima;
+        
+        switch (opcao) {
+            case 1:
+                arvoreMinima = redeSocial.getArvoreMinima(0);
+                for (Pessoa[] arrayPessoas : arvoreMinima) {
+                    System.out.println(arrayPessoas[0].getNome() + " --- " + arrayPessoas[1].getNome());
+                }
+                break;
+            case 2:
+                arvoreMinima = redeSocial.getArvoreMinima(-1);
+                for (Pessoa[] arrayPessoas : arvoreMinima) {
+                    System.out.println(arrayPessoas[0].getNome() + " --- " + arrayPessoas[1].getNome());
+                }
+                break;
+            default:
+                ui.mostraMensagem("Opção inválida. Escolha novamente.");
+                break;
+        }
+        ui.mostraMensagem("============================================");
+    }
+
+    
+    private static void mostraStatusRede() {
+        ui.mostraMensagem("==============  Status da Rede =============");
+        redeSocial.status(true);
+        ui.mostraMensagem("============================================");
+    }
+
+    
+    private static void visualizarRede() {
+        ui.mostraMensagem("===========  Visualização da Rede ==========");
+        new Applet().show(redeSocial);
+        ui.mostraMensagem("============================================");
+    }
+
+    
+    private static void procurarPessoa() {
+        ui.mostraMensagem("=============  Procurar pessoa =============");
+        String nome = ui.pegaNomePessoa();
+        Pessoa p = redeSocial.procurarPessoa(nome);
+        if(p != null) {
+            ui.mostraMensagem(p.toString());
+        } else {
+            ui.mostraMensagem("Pessoa não encontrada.");
+        }
+        ui.mostraMensagem("============================================");
+    }
+    
 }

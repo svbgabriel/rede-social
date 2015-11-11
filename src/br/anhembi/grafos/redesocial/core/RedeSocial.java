@@ -186,6 +186,10 @@ public class RedeSocial {
      * pessaos estiverem conectadas diretamente; -1 se não estiverem conectadas.
      */
     public int numeroVerticesEntreDuasPessoas(int indice1, int indice2) {
+        if (indice1 == -1 || indice2 == -1) {
+            return -1;
+        }
+        
         int[] antecessores = this.grafo.listaAntecessores(indice1);
 
         if (antecessores[indice2] == 0 && listaPessoas.getPessoa(indice2) == null) {
@@ -231,13 +235,6 @@ public class RedeSocial {
      * @return uma string com os vértices da árvore mínima. Exemplo: "[0,2],
      * [0,3] [1,2], [0,0], [0,0], "
      */
-//    public String getArvoreMinima(int verticeInicial) {
-//        if (verticeInicial < 0 || verticeInicial > this.tamanho - 1) {
-//            return this.grafo.kruskal();
-//        } else {
-//            return this.grafo.prim(verticeInicial);
-//        }
-//    }
 
     /**
      * Retorna a lista de {@link Pessoa}s da árvore mínima.
@@ -248,13 +245,12 @@ public class RedeSocial {
         List<Pessoa[]> result = new ArrayList<Pessoa[]>();
 
         String arvore;
-
         if (verticeInicial < 0 || verticeInicial > this.tamanho - 1) {
             arvore = this.grafo.kruskal();
         } else {
             arvore = this.grafo.prim(verticeInicial);
         }
-        
+
         // A string da árvore mínima está retornando com ", " no final.
         // Aqui removemos o ", ".
         if (arvore.endsWith(", ")) {
@@ -366,7 +362,6 @@ public class RedeSocial {
      * repetidas (por exemplo, Sergio-Gabriel e Gabriel-Sergio).
      */
     public void status(boolean repetirConexoes) {
-        System.out.println("Status da rede ----------------------------------");
         System.out.println("Usuários cadastrados:\t\t\t" + this.getQuantidade());
         System.out.println("Somatório dos pesos das arestas:\t" + this.grafo.numeroArestas());
         System.out.println("Conexões:\t\t\t\t" + this.numeroConexoes());
@@ -376,7 +371,6 @@ public class RedeSocial {
         for (Pessoa[] arrayPessoas : conexoes) {
             System.out.println("\t" + arrayPessoas[0].getNome() + " está conectado a " + arrayPessoas[1].getNome());
         }
-        System.out.println("-------------------------------------------------");
     }
 
     /**
@@ -387,5 +381,10 @@ public class RedeSocial {
      */
     public ListaPessoas getListaPessoas() {
         return listaPessoas;
+    }
+    
+    
+    public Pessoa procurarPessoa(String nome) {
+        return this.listaPessoas.search(nome);
     }
 }

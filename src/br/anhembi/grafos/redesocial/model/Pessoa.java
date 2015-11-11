@@ -10,6 +10,7 @@ import java.util.Objects;
  */
 public class Pessoa {
 
+    private int id;
     private String nome;
     private int idade;
 
@@ -21,6 +22,27 @@ public class Pessoa {
         this.idade = idade;
     }
 
+    public Pessoa(int id, String nome, int idade) {
+        this.id = id;
+        this.nome = nome;
+        this.idade = idade;
+    }
+
+    
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     /**
      * @return the nome
      */
@@ -51,7 +73,7 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return this.getNome() + " (" + this.getIdade() + ")";
+        return "[" + this.id + "] " + this.getNome() + " (" + this.getIdade() + ")";
     }
 
     @Override
@@ -70,4 +92,5 @@ public class Pessoa {
         hash = 31 * hash + this.idade;
         return hash;
     }
+
 }
