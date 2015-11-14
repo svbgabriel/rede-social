@@ -80,7 +80,7 @@ public class Applet extends JApplet
         Pessoa[] pessoas = redeSocial.getListaPessoas().getLista();
         for(Pessoa pessoa : pessoas) {
             if(pessoa != null) {
-                g.addVertex( pessoa.getNome() );
+                g.addVertex( pessoa.toString() );
             }
         }
         
@@ -88,19 +88,19 @@ public class Applet extends JApplet
         List<Relacionamento> relacionamentos = redeSocial.relacionamentos();
         for(Relacionamento relacionamento : relacionamentos) {
             g.addEdge( 
-                    relacionamento.getPessoa1().getNome(),
-                    relacionamento.getPessoa2().getNome(),
+                    relacionamento.getPessoa1().toString(),
+                    relacionamento.getPessoa2().toString(),
                     relacionamento.getAnosRelacionamento()
                     );
         }
         
         // Posiciona os vertices
-        int posX = 100, posY = 100;
+        int posX = 10, posY = 10;
         for(Pessoa pessoa : pessoas) {
             if(pessoa != null) {
-                positionVertexAt( pessoa.getNome(), posX, posY );
-                posX += 70;
-                posY += 70;
+                positionVertexAt( pessoa.toString(), posX, posY );
+                posX += 20;
+                posY += 50;
             }
         }
 
@@ -148,7 +148,7 @@ public class Applet extends JApplet
         Map              attr = cell.getAttributes(  );
         Rectangle2D      r2d  = GraphConstants.getBounds( attr );
 
-        GraphConstants.setBounds( attr, new Rectangle( x, y, (int)r2d.getWidth(), (int)r2d.getHeight() ) );
+        GraphConstants.setBounds( attr, new Rectangle( x, y, (int)r2d.getWidth() + 30, (int)r2d.getHeight() ) );
 
         Map cellAttr = new HashMap(  );
         cellAttr.put( cell, attr );

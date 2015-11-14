@@ -385,7 +385,7 @@ public class RedeSocial {
     }
     
     
-    public Pessoa procurarPessoa(String nome) {
+    public List<Pessoa> procurarPessoa(String nome) {
         return this.listaPessoas.search(nome);
     }
 }

@@ -1,5 +1,8 @@
 package br.anhembi.grafos.redesocial.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Manipula a lista de pessoas da rede social. Esta classe apenas insere ou
  * remove pessoas da rede, como um cadastro na rede. Ele não associa pessoas.
@@ -125,12 +128,13 @@ public class ListaPessoas {
      * @param nome      Todo ou parte do nome (case insensitive)
      * @return          Uma {@link Pessoa} ou null, se não achar
      */
-    public Pessoa search(String nome) {
+    public List<Pessoa> search(String nome) {
+        ArrayList<Pessoa> res = new ArrayList<Pessoa>();
         for (int i = 0; i < this.lista.length; i++) {
             if (this.lista[i] != null && this.lista[i].getNome().toLowerCase().contains(nome.toLowerCase())) {
-                return this.lista[i]; // achou a pessoa na lista
+                res.add(this.lista[i]); // achou a pessoa na lista
             }
         }
-        return null;
+        return res;
     }
 }

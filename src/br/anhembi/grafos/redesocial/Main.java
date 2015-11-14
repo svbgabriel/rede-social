@@ -20,6 +20,14 @@ public class Main {
         redeSocial = new RedeSocial(50);
         ui = new UserInterface();
         int opcao;
+        
+        // Teste
+//        redeSocial.insere(new Pessoa("Sérgio", 47));
+//        redeSocial.insere(new Pessoa("Gabriel", 21));
+//        redeSocial.insere(new Pessoa("Henrique", 22));
+//        redeSocial.relacionar(0, 1, 3);
+//        redeSocial.relacionar(1, 2, 3);
+        // ------
 
         do {
             ui.mostraMenuPrinciapal();
@@ -252,9 +260,11 @@ public class Main {
     private static void procurarPessoa() {
         ui.mostraMensagem("=============  Procurar pessoa =============");
         String nome = ui.pegaNomePessoa();
-        Pessoa p = redeSocial.procurarPessoa(nome);
-        if(p != null) {
-            ui.mostraMensagem(p.toString());
+        List<Pessoa> pessoas = redeSocial.procurarPessoa(nome);
+        if(pessoas != null && pessoas.size() > 0) {
+            for(Pessoa p : pessoas) {
+                ui.mostraMensagem(p.toString());
+            }
         } else {
             ui.mostraMensagem("Pessoa não encontrada.");
         }
